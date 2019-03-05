@@ -1,0 +1,11 @@
+json.first_name user.first_name
+json.last_name user.last_name
+json.email user.email
+json.password_digest user.password_digest
+json.admin user.admin
+json.phone_number user.phone_number
+json.address_1 user.address_1
+json.address_2 user.address_2
+json.city user.city
+json.state user.state
+json.zip_code user.zip_code
