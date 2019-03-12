@@ -1,4 +1,5 @@
 class Api::SubmissionsController < ApplicationController
+  before_action :authenticate_user
 
   def index
     @submissions = Submission.all
