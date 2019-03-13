@@ -50,8 +50,6 @@ class Api::UsersController < ApplicationController
     @user.first_name = params[:first_name] || @user.first_name
     @user.last_name = params[:last_name] || @user.last_name
     @user.email = params[:email] || @user.email
-    @user.password = params[:password] || @user.password
-    @user.password_confirmation = params[:password_confirmation] || @user.password_confirmation
     @user.phone_number = params[:phone_number] || @user.phone_number
     @user.address_1 = params[:address_1] || @user.address_1
     @user.address_2 = params[:address_2] || @user.address_2
