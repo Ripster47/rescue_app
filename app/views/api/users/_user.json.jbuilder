@@ -10,3 +10,16 @@ json.address_2 user.address_2
 json.city user.city
 json.state user.state
 json.zip_code user.zip_code
+json.rent user.rent
+json.children user.children
+json.adult user.adult
+json.volunteer user.volunteer
+json.foster user.foster
+json.usark user.usark
+json.exotic_vet user.exotic_vet
+json.ever_owned user.ever_owned
+json.care user.care
+json.provisions user.provisions
+json.bequest user.bequest
+json.accommodations user.accommodations
+json.permit user.permit

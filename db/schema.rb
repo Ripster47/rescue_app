@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_05_232157) do
+ActiveRecord::Schema.define(version: 2019_03_13_170418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,19 @@ ActiveRecord::Schema.define(version: 2019_03_05_232157) do
     t.string "zip_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "rent"
+    t.boolean "children"
+    t.boolean "adult"
+    t.boolean "volunteer"
+    t.boolean "foster"
+    t.boolean "usark"
+    t.boolean "exotic_vet"
+    t.boolean "ever_owned"
+    t.boolean "care"
+    t.boolean "provisions"
+    t.boolean "bequest"
+    t.integer "accommodations"
+    t.boolean "permit"
   end
 
 end

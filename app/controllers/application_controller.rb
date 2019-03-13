@@ -29,9 +29,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin
-    p "*" * 50
-    p current_user
-    p "*" * 50
     unless current_user && current_user.admin?
       render json: {}, status: :unauthorized
     end
