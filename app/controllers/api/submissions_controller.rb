@@ -8,10 +8,10 @@ class Api::SubmissionsController < ApplicationController
 
   def create
     @submission = Submission.new(
-                        user_id: params[:user_id],
+                        user_id: current_user.id,
                         animal_id: params[:animal_id],
                         purpose: params[:purpose],
-                        status: params[:status],
+                        status: "pending",
                         relinquish_reason: params[:relinquish_reason]
                         )
     if @submission.save
