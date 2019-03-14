@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-
+  before_action :authenticate_user, only: [:show, :update]
   def index
       @users = User.all
       render 'index.json.jbuilder'
@@ -40,12 +40,8 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    if @user.id == current_user.id
-      render 'show.json.jbuilder'
-    else
-      render json: {errors: @user.errors.full_messages}, status: :unprocessable_entity
-    end
+    @user = current_user
+    render 'show.json.jbuilder'
   end
 
   def update
@@ -85,7 +81,7 @@ class Api::UsersController < ApplicationController
     else
       render json: {errors: @user.errors.full_messages}, status: :unprocessable_entity
     end
-    
+
   end
 
   def destroy
