@@ -1,5 +1,5 @@
 class Api::SubmissionsController < ApplicationController
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   def index
     @submissions = Submission.all
@@ -8,12 +8,13 @@ class Api::SubmissionsController < ApplicationController
 
   def create
     @submission = Submission.new(
-                        user_id: current_user.id,
-                        animal_id: params[:animal_id],
-                        purpose: params[:purpose],
-                        status: "pending",
-                        relinquish_reason: params[:relinquish_reason]
-                        )
+                                  user_id: current_user.id,
+                                  animal_id: params[:animal_id],
+                                  purpose: params[:purpose],
+                                  status: "pending",
+                                  relinquish_reason: params[:relinquish_reason]
+                                  )
+    
     if @submission.save
       render 'show.json.jbuilder'
     else
