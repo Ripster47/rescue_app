@@ -12,7 +12,8 @@ class Api::SubmissionsController < ApplicationController
                                   animal_id: params[:animal_id],
                                   purpose: params[:purpose],
                                   status: "pending",
-                                  relinquish_reason: params[:relinquish_reason]
+                                  relinquish_reason: params[:relinquish_reason],
+                                  animal_type: params[:animal_type]
                                   )
     
     if @submission.save
@@ -35,6 +36,7 @@ class Api::SubmissionsController < ApplicationController
     @submission.purpose = params[:purpose] || @submission.purpose
     @submission.status = params[:status] || @submission.status
     @submission.relinquish_reason = params[:relinquish_reason] || @submission.relinquish_reason
+    @submission.animal_type = params[:animal_type] || @submission.animal_type
 
     if @submission.save
       render 'show.json.jbuilder'
