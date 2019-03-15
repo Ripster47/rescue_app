@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
     get '/submissions' => 'submissions#index'
     post '/submissions' => 'submissions#create'
+    get '/submissions/requests' => 'submissions#index_pending'
     get '/submissions/:id' => 'submissions#show'
     patch '/submissions/:id' => 'submissions#update'
     delete '/submissions/:id' => 'submissions#destroy'

@@ -6,6 +6,11 @@ class Api::SubmissionsController < ApplicationController
     render 'index.json.jbuilder'
   end
 
+  def index_pending
+    @submissions = Submission.where("status = ?", 3)
+    render 'index.json.jbuilder'
+  end
+
   def create
     @submission = Submission.new(
                                   user_id: current_user.id,
