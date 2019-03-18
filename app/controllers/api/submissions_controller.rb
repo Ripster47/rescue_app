@@ -1,5 +1,9 @@
+require './app/services/twilio_text_messenger.rb'
+
 class Api::SubmissionsController < ApplicationController
-  # before_action :authenticate_user
+  before_action :authenticate_admin, except: :create
+
+
 
   def index
     @submissions = Submission.all
@@ -22,7 +26,13 @@ class Api::SubmissionsController < ApplicationController
                                   )
     
     if @submission.save
-      render 'show.json.jbuilder'
+      if @submission.purpose == "adoption"
+        message = "Your adoption application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
+        TwilioTextMessenger.new(message).call
+      else
+        message = "Your relinquishment application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
+        TwilioTextMessenger.new(message).call
+      end
     else
       render json: {errors: @submission.errors.full_messages}, status: :unprocessable_entity
     end
