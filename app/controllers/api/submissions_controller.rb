@@ -28,10 +28,10 @@ class Api::SubmissionsController < ApplicationController
     if @submission.save
       if @submission.purpose == "adoption"
         message = "Your adoption application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
-        TwilioTextMessenger.new(message).call
+        TwilioTextMessenger.new(message).call_admin
       else
         message = "Your relinquishment application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
-        TwilioTextMessenger.new(message).call
+        TwilioTextMessenger.new(message).call_admin
       end
     else
       render json: {errors: @submission.errors.full_messages}, status: :unprocessable_entity
@@ -53,7 +53,15 @@ class Api::SubmissionsController < ApplicationController
     @submission.relinquish_reason = params[:relinquish_reason] || @submission.relinquish_reason
     @submission.animal_type = params[:animal_type] || @submission.animal_type
 
+
     if @submission.save
+      if @submission.status == "approved"
+        message = "Congratulations! Your application has been approved!"
+        TwilioTextMessenger.new(message).call(@submission.user)
+      else @submission.status == "denied"
+        message = "Hello! Unfortunately your application has been denied at this time, the animal you a wanted to adopt may have found a home already, or the rescue may not have room for your relinquishment at this time, contact us with specific questions if necessary!"
+        TwilioTextMessenger.new(message).call(@submission.user)
+      end
       render 'show.json.jbuilder'
     else
       render json: {errors: @submission.errors.full_messages}, status: :unprocessable_entity

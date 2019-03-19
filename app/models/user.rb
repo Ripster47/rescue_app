@@ -8,5 +8,11 @@ class User < ApplicationRecord
 
   enum accommodations: { Apartment: 1, Condominium: 2, House: 3, Other: 4}
 
+  def formatted_phone
+    twilio_number = "+1#{phone_number.gsub(/\D/, "")}"
+  end
+
+
+
 
 end
