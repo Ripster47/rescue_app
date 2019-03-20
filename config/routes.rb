@@ -22,8 +22,11 @@ Rails.application.routes.draw do
     patch '/submissions/:id' => 'submissions#update'
     delete '/submissions/:id' => 'submissions#destroy'
 
-
-
+    get '/google/redirect', to: 'appointments#redirect', as: 'redirect'
+    get '/google/callback', to: 'appointments#callback', as: 'callback'
+    get '/google/calendars', to: 'appointments#calendars', as: 'calendars'
+    get '/google/events/:calendar_id', to: 'appointments#events', as: 'events', calendar_id: /[^\/]+/
+    post '/google/events/:calendar_id', to: 'appointments#new_event', as: 'new_event', calendar_id: /[^\/]+/
 
   end
 end
