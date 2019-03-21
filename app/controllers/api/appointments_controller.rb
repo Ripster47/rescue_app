@@ -15,7 +15,7 @@ class Api::AppointmentsController < ApplicationController
 
       session[:authorization] = response
 
-      redirect_to 'http://localhost:3000/api/google/calendars'
+      redirect_to "http://localhost:8080/about"
 
   end
 
@@ -49,28 +49,28 @@ class Api::AppointmentsController < ApplicationController
     
   end
 
-  def new_event
-      client = Signet::OAuth2::Client.new(client_options)
-      client.update!(session[:authorization])
+  # def new_event
+  #     client = Signet::OAuth2::Client.new(client_options)
+  #     client.update!(session[:authorization])
 
-      service = Google::Apis::CalendarV3::CalendarService.new
-      service.authorization = client
+  #     service = Google::Apis::CalendarV3::CalendarService.new
+  #     service.authorization = client
 
-      today = Date.today
+  #     today = Date.today
 
-      event = Google::Apis::CalendarV3::Event.new({
-        start: Google::Apis::CalendarV3::EventDateTime.new(date: today),
-        end: Google::Apis::CalendarV3::EventDateTime.new(date: today + 1),
-        summary: 'New event!',
-        attendees: [{
-                      email: submission.user.email
-                      }]
-      })
+  #     event = Google::Apis::CalendarV3::Event.new({
+  #       start: Google::Apis::CalendarV3::EventDateTime.new(date: today),
+  #       end: Google::Apis::CalendarV3::EventDateTime.new(date: today + 1),
+  #       summary: 'New event!',
+  #       attendees: [{
+  #                     email: submission.user.email
+  #                     }]
+  #     })
 
-      service.insert_event(params[:calendar_id], event)
+  #     service.insert_event(params[:calendar_id], event)
 
-      redirect_to "/api/google/events/#{params[:calendar_id]}"
-    end
+  #     redirect_to "/api/google/events/#{params[:calendar_id]}"
+  #   end
 
 
 
