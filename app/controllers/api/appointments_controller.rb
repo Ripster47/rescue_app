@@ -84,8 +84,9 @@ class Api::AppointmentsController < ApplicationController
       user = submission.user
 
       event = Google::Apis::CalendarV3::Event.new({
-        start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time, time_zone: "CST"),
-        end: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time + 30.minutes, time_zone: "CST"),
+        start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time.strftime("%Y-%m-%eT%H:%M:%S.000-06:00")),
+        end: Google::Apis::CalendarV3::EventDateTime.new(date_time: (start_time + 30.minutes).strftime("%Y-%m-%eT%H:%M:%S.000-06:00")),
+        # 2019-03-08T19:30:00.000-06:00
         summary: "Adoption time!",
         attendees: [{
                       email: user.email,
