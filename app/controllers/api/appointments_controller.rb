@@ -12,16 +12,17 @@ class Api::AppointmentsController < ApplicationController
       client.code = params[:code]
 
       response = client.fetch_access_token!
+      p "*" * 100
+      p "*" * 100
+      p response
+      p "*" * 100
+      p "*" * 100
 
-      timestamp =  response["expires_in"].to_i
-      p "*" * 100
-      p "*" * 100
-      p timestamp
-      p "*" * 100
-      p "*" * 100
+      exp_time =  CGI.escape(response["expires_in"].to_i.seconds.from_now.to_s)
+
       uri_encoded_rt = CGI.escape(response["refresh_token"])
 
-      redirect_to "http://localhost:8080/catch/#{response["access_token"]}/#{response["expires_in"]}/#{uri_encoded_rt}/#{timestamp}"
+      redirect_to "http://localhost:8080/catch/#{response["access_token"]}/#{response["expires_in"]}/#{uri_encoded_rt}/#{exp_time}"
   end
 
 
