@@ -8,27 +8,27 @@ class Api::AppointmentsController < ApplicationController
 
   def callback
       client = Signet::OAuth2::Client.new(client_options)
-
       client.code = params[:code]
-
       response = client.fetch_access_token!
-      p "*" * 100
-      p "*" * 100
-      p response
-      p "*" * 100
-      p "*" * 100
 
       exp_time =  CGI.escape(response["expires_in"].to_i.seconds.from_now.to_s)
-
       uri_encoded_rt = CGI.escape(response["refresh_token"])
 
-      redirect_to "http://localhost:8080/catch/#{response["access_token"]}/#{response["expires_in"]}/#{uri_encoded_rt}/#{exp_time}"
+      redirect_to "http://localhost:8080/catch/#{response["access_token"]}/#{exp_time}/#{uri_encoded_rt}"
   end
 
 
   def calendars
     client = Signet::OAuth2::Client.new(client_options)
-    client.update!(session[:authorization])
+    client.update!(
+                      {
+                        "access_token" => params[:at_google], 
+                        "expires_in" => 3600, 
+                        "refresh_token" => params[:rt_google], 
+                        "scope"=>"https://www.googleapis.com/auth/calendar", 
+                        "token_type"=>"Bearer"
+                      }
+                    )
 
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
@@ -47,36 +47,55 @@ class Api::AppointmentsController < ApplicationController
 
   def events
     client = Signet::OAuth2::Client.new(client_options)
-    client.update!(session[:authorization])
+    client.update!(
+                      {
+                        "access_token" => params[:at_google], 
+                        "expires_in" => 3600, 
+                        "refresh_token" => params[:rt_google], 
+                        "scope"=>"https://www.googleapis.com/auth/calendar", 
+                        "token_type"=>"Bearer"
+                      }
+                    )
 
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
 
-    @event_list = service.list_events(params[:calendar_id])
+    @event_list = service.list_events("mpolinski12@gmail.com")
     
   end
 
   def new_event
       client = Signet::OAuth2::Client.new(client_options)
-      client.update!(session[:authorization])
+      client.update!(
+                        {
+                          "access_token" => params[:at_google], 
+                          "expires_in" => 3600, 
+                          "refresh_token" => params[:rt_google], 
+                          "scope"=>"https://www.googleapis.com/auth/calendar", 
+                          "token_type"=>"Bearer"
+                        }
+                      )
 
       service = Google::Apis::CalendarV3::CalendarService.new
       service.authorization = client
 
-      today = Date.today
+      start_time = Time.parse(params[:start_time])
+      submission = Submission.find(params[:submission_id])
+      user = submission.user
 
       event = Google::Apis::CalendarV3::Event.new({
-        start: Google::Apis::CalendarV3::EventDateTime.new(date: today),
-        end: Google::Apis::CalendarV3::EventDateTime.new(date: today + 1),
-        summary: 'New event!',
+        start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time, time_zone: "CST"),
+        end: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time + 30.minutes, time_zone: "CST"),
+        summary: "Adoption time!",
         attendees: [{
-                      email: submission.user.email
+                      email: user.email,
+                      displayName: user.full_name
                       }]
       })
 
-      service.insert_event(params[:calendar_id], event)
+      service.insert_event("mpolinski12@gmail.com", event)
 
-      redirect_to "/api/google/events/#{params[:calendar_id]}"
+      render json: {message: "calendar event request sent"}
     end
 
 

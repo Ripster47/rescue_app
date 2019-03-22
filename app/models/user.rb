@@ -12,7 +12,9 @@ class User < ApplicationRecord
     twilio_number = "+1#{phone_number.gsub(/\D/, "")}"
   end
 
-
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
 
 end

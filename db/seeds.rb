@@ -1,7 +1,11 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+user_ids = User.pluck(:id)
+animal_ids = Animal.pluck(:id)
+
+
+user_ids.each do |user_id|
+  animal_selected_ids = animal_ids.sample(rand(1..3))
+
+  animal_selected_ids.each do |animal_id|
+    Submission.create(user_id: user_id, animal_id: animal_id, status: "pending", purpose: "adoption")
+  end
+end
