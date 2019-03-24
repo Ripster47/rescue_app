@@ -91,7 +91,8 @@ class Api::AppointmentsController < ApplicationController
         attendees: [{
                       email: user.email,
                       displayName: user.full_name
-                      }]
+                      }],
+        sendUpdates: "all"
       })
 
       service.insert_event("mpolinski12@gmail.com", event)
