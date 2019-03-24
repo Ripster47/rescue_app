@@ -27,10 +27,10 @@ class Api::SubmissionsController < ApplicationController
     
     if @submission.save
       if @submission.purpose == "adoption"
-        message = "Your adoption application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
+        message = "From Friends of Scales Reptile Rescue: Your adoption application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
         TwilioTextMessenger.new(message).call_admin
       else
-        message = "Your relinquishment application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
+        message = "From Friends of Scales Reptile Rescue: Your relinquishment application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
         TwilioTextMessenger.new(message).call_admin
       end
     else
@@ -56,10 +56,10 @@ class Api::SubmissionsController < ApplicationController
 
     if @submission.save
       if @submission.status == "approved"
-        message = "Congratulations! Your application has been approved!"
+        message = "From Friends of Scales Reptile Rescue: Congratulations! Your application has been approved! Please check your email for your scheduled appointment time!"
         TwilioTextMessenger.new(message).call(@submission.user)
       else @submission.status == "denied"
-        message = "Hello! Unfortunately your application has been denied at this time, the animal you a wanted to adopt may have found a home already, or the rescue may not have room for your relinquishment at this time, contact us with specific questions if necessary!"
+        message = "From Friends of Scales Reptile Rescue: Hello! Unfortunately your application has been denied at this time, the animal you a wanted to adopt may have found a home already, or the rescue may not have room for your relinquishment at this time, contact us with specific questions if necessary!"
         TwilioTextMessenger.new(message).call(@submission.user)
       end
       render 'show.json.jbuilder'

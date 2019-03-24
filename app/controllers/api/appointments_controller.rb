@@ -85,7 +85,7 @@ class Api::AppointmentsController < ApplicationController
 
       event = Google::Apis::CalendarV3::Event.new({
         start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time.strftime("%Y-%m-%eT%H:%M:%S.000-06:00")),
-        end: Google::Apis::CalendarV3::EventDateTime.new(date_time: (start_time + 30.minutes).strftime("%Y-%m-%eT%H:%M:%S.000-06:00")),
+        end: Google::Apis::CalendarV3::EventDateTime.new(date_time: (start_time + 5.minutes).strftime("%Y-%m-%eT%H:%M:%S.000-06:00")),
         # 2019-03-08T19:30:00.000-06:00
         summary: "Adoption time!",
         attendees: [{
