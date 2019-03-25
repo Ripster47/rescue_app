@@ -37,10 +37,12 @@ class Api::AppointmentsController < ApplicationController
 
 
     rescue Google::Apis::AuthorizationError
-      response = client.refresh!
+      response = client.fetch_access_token!
 
-      session[:authorization] = session[:authorization].merge(response)
+      exp_time =  CGI.escape(response["expires_in"].to_i.seconds.from_now.to_s)
+      uri_encoded_rt = CGI.escape(response["refresh_token"])
 
+      redirect_to "http://localhost:8080/catch/#{response["access_token"]}/#{exp_time}/#{uri_encoded_rt}"
     retry
     
   end
