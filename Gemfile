@@ -31,6 +31,8 @@ gem 'figaro'
 
 gem 'google-api-client', require: 'google/apis/calendar_v3'
 
+gem 'seed_dump'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
