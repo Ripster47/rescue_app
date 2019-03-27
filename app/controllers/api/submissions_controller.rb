@@ -27,10 +27,10 @@ class Api::SubmissionsController < ApplicationController
     
     if @submission.save
       if @submission.purpose == "adoption"
-        message = "From Friends of Scales Reptile Rescue: Your adoption application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
+        message = "There is a new adoption application awaiting your review!"
         TwilioTextMessenger.new(message).call_admin
       else
-        message = "From Friends of Scales Reptile Rescue: Your relinquishment application has been sent! Please understand that Friends of Scales is a volunteer organization, you will get a response as soon as possible. Thank You!"
+        message = "There is a new relinquishment application awaiting your review!"
         TwilioTextMessenger.new(message).call_admin
       end
     else
