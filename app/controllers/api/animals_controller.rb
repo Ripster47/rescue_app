@@ -7,7 +7,7 @@ class Api::AnimalsController < ApplicationController
     render 'index.json.jbuilder'
   end
 
-  def create
+  def create 
     @animal = Animal.new(
                         name: params[:name],
                         species: params[:species],
@@ -56,6 +56,4 @@ class Api::AnimalsController < ApplicationController
     animal.destroy
     render json: {Message: "Successfully Removed!"}
   end
-
-
 end
