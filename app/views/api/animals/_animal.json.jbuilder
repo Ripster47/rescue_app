@@ -8,6 +8,7 @@ json.gender animal.gender
 json.age animal.age
 json.image_url animal.image_url
 json.donation animal.donation
+json.photo rails_blob_url(animal.photo) if animal.photo.attachment
 
 json.formatted  do 
   json.donation number_to_currency(animal.donation, precision: 2)

@@ -17,7 +17,8 @@ class Api::AnimalsController < ApplicationController
                         gender: params[:gender],
                         age: params[:age],
                         image_url: params[:image_url],
-                        donation: params[:donation]
+                        donation: params[:donation],
+                        photo: params[:photo]
                         )
     if @animal.save
       render 'show.json.jbuilder'
