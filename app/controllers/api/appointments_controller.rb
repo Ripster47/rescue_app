@@ -84,6 +84,11 @@ class Api::AppointmentsController < ApplicationController
       start_time = Time.parse(params[:start_time])
       submission = Submission.find(params[:submission_id])
       user = submission.user
+      p "*" * 100
+      p "*" * 100
+      p start_time
+      p "*" * 100
+      p "*" * 100
 
       event = Google::Apis::CalendarV3::Event.new({
         start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time.strftime("%Y-%m-%dT%H:%M:%S.000-06:00")),

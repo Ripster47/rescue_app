@@ -56,7 +56,8 @@ class Api::SubmissionsController < ApplicationController
 
     if @submission.save
       if @submission.status == "approved"
-        message = "From Friends of Scales Reptile Rescue: Congratulations! Your application has been approved! Please check your email for your scheduled appointment time!"
+        @submission.deny_all
+        message = "From Friends of Scales Reptile Rescue: Congratulations! Your application has been approved! Please contact us to schedule a pick up/drop off time!"
         TwilioTextMessenger.new(message).call(@submission.user)
       else @submission.status == "denied"
         message = "From Friends of Scales Reptile Rescue: Hello! Unfortunately your application has been denied at this time, the animal you a wanted to adopt may have found a home already, or the rescue may not have room for your relinquishment at this time, contact us with specific questions if necessary!"
